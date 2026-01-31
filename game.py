@@ -83,3 +83,42 @@ def start_game():
 spawn_enemies()
 
 btn_start, btn_sound, btn_music, btn_exit = [Rect(WIDTH//2-100, 180+i*60, 200, 45) for i in range(4)]
+
+def update():
+    global game_state, music_playing, score, score_timer, intro_timer
+    if music_enabled and not music_playing:
+        try: sounds.music.play(-1); music_playing=True
+        except: pass
+    elif not music_enabled and music_playing:
+        try: sounds.music.stop(); music_playing=False
+        except: pass
+    if game_state in ("PAUSED", "MENU", "GAMEOVER"): return
+    score_timer += 1
+    if score_timer >= 120: score_timer, score = 0, score + 10
+    if intro_timer > 0: intro_timer -= 1
+    hero.smooth(); hero.animate()
+    for e in enemies:
+        e.ai(hero, enemies); e.smooth(); e.animate()
+        if hero.hitbox.colliderect(e.hitbox): game_state="GAMEOVER"
+
+def draw():
+    screen.clear()
+    if game_state=="MENU":
+        screen.draw.text("DUNGEON PHANTOM", center=(WIDTH//2,100), fontsize=60, color="red")
+        txts = ["Start", f"SFX: {'ON' if sound_enabled else 'OFF'}", f"Music: {'ON' if music_enabled else 'OFF'}", "Exit"]
+        for i, b in enumerate([btn_start, btn_sound, btn_music, btn_exit]):
+            screen.draw.filled_rect(b,(50,50,50)); screen.draw.rect(b,"white")
+            screen.draw.text(txts[i], center=b.center, fontsize=30)
+    elif game_state in ("PLAYING", "PAUSED"):
+        screen.blit("floor",(0,0)); hero.draw()
+        for e in enemies: e.draw()
+        screen.draw.text(f"SCORE: {score}", topleft=(20, 20), fontsize=40, color="white", shadow=(1,1))
+        if intro_timer > 0:
+            screen.draw.text("LEVEL 1: THE CURSED DUNGEON", center=(WIDTH//2, HEIGHT//2-20), fontsize=50, color="yellow", shadow=(1,1))
+            screen.draw.text("SURVIVE AS LONG AS YOU CAN!", center=(WIDTH//2, HEIGHT//2+30), fontsize=30, color="white", shadow=(1,1))
+        if game_state=="PAUSED":
+            screen.draw.text("PAUSED", center=(WIDTH//2, HEIGHT//2), fontsize=80, color="white", shadow=(1,1))
+            screen.draw.text("Press Enter to Resume", center=(WIDTH//2, HEIGHT//2+60), fontsize=30, color="white", shadow=(1,1))
+    else:
+        screen.draw.text("GAME OVER", center=(WIDTH//2,HEIGHT//2), fontsize=80, color="red")
+        screen.draw.text("Click or Press Enter to return", center=(WIDTH//2,HEIGHT//2+60), fontsize=30)
