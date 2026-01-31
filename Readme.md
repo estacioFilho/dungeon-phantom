@@ -27,7 +27,7 @@ A tela inicial contém:
 
 Interface simples e funcional para facilitar o uso.
 
-![image.png](https://github.com/estacioFilho/imagesProjects/blob/main/image%201.png?raw=true)
+![image2.png](https://github.com/estacioFilho/imagesProjects/blob/main/image.png?raw=true)
 
 ---
 
@@ -41,7 +41,7 @@ Na tela principal:
 - Mensagem inicial de introdução do nível
 - Fundo fixo (cenário)
 
-![image2.png](https://github.com/estacioFilho/imagesProjects/blob/main/image.png?raw=true)
+![image.png](https://github.com/estacioFilho/imagesProjects/blob/main/image%201.png?raw=true)
 
 Quando o herói colide com um inimigo:
 
