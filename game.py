@@ -122,3 +122,39 @@ def draw():
     else:
         screen.draw.text("GAME OVER", center=(WIDTH//2,HEIGHT//2), fontsize=80, color="red")
         screen.draw.text("Click or Press Enter to return", center=(WIDTH//2,HEIGHT//2+60), fontsize=30)
+
+def on_key_down(key):
+    global game_state
+    if game_state=="PLAYING":
+        move = {
+            keys.LEFT:(-1,0),
+            keys.A:(-1,0),
+            keys.RIGHT:(1,0),
+            keys.D:(1,0),
+            keys.UP:(0,-1),
+            keys.W:(0,-1),
+            keys.DOWN:(0,1),
+            keys.S:(0,1)
+        }
+        if key in move:
+            if hero.try_move(*move[key], enemies) and sound_enabled:
+                try: sounds.hero_move.play()
+                except: pass
+        if key == keys.RETURN: game_state = "PAUSED"
+    elif key == keys.RETURN:
+        if game_state == "MENU": start_game()
+        elif game_state == "PAUSED": game_state = "PLAYING"
+        elif game_state == "GAMEOVER": game_state = "MENU"
+    if key == keys.ESCAPE: game_state = "MENU"
+
+def on_mouse_down(pos):
+    global game_state, sound_enabled, music_enabled
+    if game_state=="MENU":
+        if btn_start.collidepoint(pos): start_game()
+        elif btn_sound.collidepoint(pos): sound_enabled=not sound_enabled
+        elif btn_music.collidepoint(pos): music_enabled=not music_enabled
+        elif btn_exit.collidepoint(pos): exit()
+    elif game_state=="GAMEOVER": game_state="MENU"
+pgzrun.go()
+
+
