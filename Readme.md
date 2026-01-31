@@ -41,14 +41,14 @@ Na tela principal:
 - Mensagem inicial de introdução do nível
 - Fundo fixo (cenário)
 
-![image.png](image%201.png)](https://github.com/estacioFilho/imagesProjects/blob/main/image.png?raw=true)
+![image2.png](https://github.com/estacioFilho/imagesProjects/blob/main/image.png?raw=true)
 
 Quando o herói colide com um inimigo:
 
 > GAME OVER
 > 
 
-![image%202.png](https://github.com/estacioFilho/imagesProjects/blob/main/image%202.png?raw=true)
+![image3.png](https://github.com/estacioFilho/imagesProjects/blob/main/image%202.png?raw=true)
 
 ---
 
